@@ -1,0 +1,32 @@
+<rok $rokcislom>
+
+  <mesto $nazovmesta $pocetobyvatlov>
+
+    <mestska cast $nazovcasti>
+       
+      <trestny cin>
+
+        <klasifikacia></klasifikacia>		//aky cin
+	<druh></druh>				//zlocin-precin
+        <stadium>1-2-3</stadium>		//priprava-pokus-dokonany
+	<naulici>0-1</naulici>			//spachane na ulici??
+	<zbran>0-1</zbran>			//bola pouzita zbran?
+	<spachanie>datum</spachanie>		//datum trestneho cinu
+	???<predmet></predmet>			//co chcel pachatel
+	<skoda></skoda>				//sposobena skoda v kc
+	<datum ukoncenia></datum ukoncenia>	//datum ukoncenia tr
+	<sposob ukoncenia></sposob ukoncenia>	//sposoby ukoncenia tr 0-5         
+
+      </trestny cin>
+      .
+      .
+      .
+
+    </mestska cast>
+    .
+    .
+    .
+
+  </mesto>
+
+</rok>
