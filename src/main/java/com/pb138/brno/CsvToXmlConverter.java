@@ -24,14 +24,16 @@ public class CsvToXmlConverter {
     private Document document;
 
     private static Map<Integer, String> headers = new HashMap<Integer, String>() {{
-        put(4, "Klasifikace");
-        put(2, "Stadium");
-        put(5, "NaUlici");
-        put(7, "zbran");
-        put(9, "Spachani");
-        put(17, "Skoda");
-        put(26, "DatumUkonceni");
-        put(27, "ZpusobUkonceni");
+    	put(1, "UtvarPCR");
+    	put(2, "StadiumCinu");
+    	put(3, "DruhCinu");
+        put(4, "KlasifikaceCinu");        
+        put(5, "SpachanNaUlici");
+        put(7, "PouzitaZbran");
+        put(17, "VzniknutaSkoda");
+        put(9, "DatumVykonania");
+        put(26, "DatumUkoncenia");
+        put(27, "TypUkoncenia");
     }};
 
     public CsvToXmlConverter() throws ParserConfigurationException {
@@ -41,12 +43,20 @@ public class CsvToXmlConverter {
     public Document getDocument(String csvPath) throws IOException, ParserConfigurationException, TransformerException {
         //if (document != null) return document;
         document = documentBuilder.newDocument();
-        Element crimesElement = document.createElement("crimes");
-        document.appendChild(crimesElement);
+        Element yearElement = document.createElement("Rok");
+        yearElement.setAttribute("rok", "2016");
+        document.appendChild(yearElement);
+        Element crimesElement = document.createElement("TrestneCiny");
+        yearElement.appendChild(crimesElement);
         try (FileReader reader = new FileReader(csvPath)) {
             try (CSVReader csvReader = new CSVReader(reader, ';', '"')) {
+            	boolean isFirst = true;
                 for (String[] line : csvReader) {
-                    Element crimeElement = document.createElement("crime");
+                	if (isFirst) {
+                		isFirst = false;
+                		continue;
+                	}
+                    Element crimeElement = document.createElement("TrestnyCin");
                     headers.forEach((index, header) -> {
                         Element el = document.createElement(header);
                         el.setTextContent(line[index]);
