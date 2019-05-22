@@ -8,10 +8,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.File;
+import javax.xml.transform.TransformerException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -39,7 +36,7 @@ public class CsvToXmlConverter {
         this.documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
     }
 
-    public Document getDocument(String csvPath) throws IOException, ParserConfigurationException, TransformerException {
+    public Document getDocument(String csvPath) throws IOException {
         //if (document != null) return document;
         document = documentBuilder.newDocument();
         Element yearElement = document.createElement("Rok");
@@ -67,10 +64,6 @@ public class CsvToXmlConverter {
             }
 
         }
-        Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        Result output = new StreamResult(new File("src/main/resources/output.xml"));
-        Source input = new DOMSource(document);
-        transformer.transform(input, output);
         return document;
     }
 }

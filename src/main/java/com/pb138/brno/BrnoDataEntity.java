@@ -1,123 +1,123 @@
 package com.pb138.brno;
 
 public class BrnoDataEntity {
-	private String year;
-	private String month;
-	
-	private String region;
-	private String damage;
-	private String stage;
-	private String classification;
-	private String onStreet;
-	private String weapon;
-	
-	private String dateOfCrime;
-	private String dateResolved;
-	
-	private String typeOfResolution;
-	
-	public BrnoDataEntity(String year, String month, String region, String damage, String stage, 
-						  String classification, String onStreet, String weapon, String dateOfCrime, 
-						  String dateResolved, String typeOfResolution) {
-		super();
-		this.year = year;
-		this.month = month;
-		this.region = region;
-		this.damage = damage;
-		this.stage = stage;
-		this.classification = classification;
-		this.onStreet = onStreet;
-		this.weapon = weapon;
-		this.dateOfCrime = dateOfCrime;
-		this.dateResolved = dateResolved;
-		this.typeOfResolution = typeOfResolution;
-	}
-	
-	public String getYear() {
-		return year;
-	}
+    private String year;
+    private String month;
 
-	public void setYear(String year) {
-		this.year = year;
-	}
+    private String region;
+    private String damage;
+    private String stage;
+    private String classification;
+    private String onStreet;
+    private String weapon;
 
-	public String getMonth() {
-		return month;
-	}
+    private String dateOfCrime;
+    private String dateResolved;
 
-	public void setMonth(String month) {
-		this.month = month;
-	}
+    private String typeOfResolution;
 
-	public String getRegion() {
-		return region;
-	}
+    public BrnoDataEntity(String year, String month, String region, String damage, String stage,
+                          String classification, String onStreet, String weapon, String dateOfCrime,
+                          String dateResolved, String typeOfResolution) {
+        super();
+        this.year = year;
+        this.month = month;
+        this.region = region;
+        this.damage = damage;
+        this.stage = stage;
+        this.classification = classification;
+        this.onStreet = onStreet;
+        this.weapon = weapon;
+        this.dateOfCrime = dateOfCrime;
+        this.dateResolved = dateResolved;
+        this.typeOfResolution = typeOfResolution;
+    }
 
-	public void setRegion(String region) {
-		this.region = region;
-	}
+    public String getYear() {
+        return year;
+    }
 
-	public String getDamage() {
-		return damage;
-	}
+    public void setYear(String year) {
+        this.year = year;
+    }
 
-	public void setDamage(String damage) {
-		this.damage = damage;
-	}
+    public String getMonth() {
+        return month;
+    }
 
-	public String getStage() {
-		return stage;
-	}
+    public void setMonth(String month) {
+        this.month = month;
+    }
 
-	public void setStage(String stage) {
-		this.stage = stage;
-	}
+    public String getRegion() {
+        return region;
+    }
 
-	public String getClassification() {
-		return classification;
-	}
+    public void setRegion(String region) {
+        this.region = region;
+    }
 
-	public void setClassification(String classification) {
-		this.classification = classification;
-	}
+    public String getDamage() {
+        return damage;
+    }
 
-	public String getOnStreet() {
-		return onStreet;
-	}
+    public void setDamage(String damage) {
+        this.damage = damage;
+    }
 
-	public void setOnStreet(String onStreet) {
-		this.onStreet = onStreet;
-	}
+    public String getStage() {
+        return stage;
+    }
 
-	public String getWeapon() {
-		return weapon;
-	}
+    public void setStage(String stage) {
+        this.stage = stage;
+    }
 
-	public void setWeapon(String weapon) {
-		this.weapon = weapon;
-	}
+    public String getClassification() {
+        return classification;
+    }
 
-	public String getDateOfCrime() {
-		return dateOfCrime;
-	}
+    public void setClassification(String classification) {
+        this.classification = classification;
+    }
 
-	public void setDateOfCrime(String dateOfCrime) {
-		this.dateOfCrime = dateOfCrime;
-	}
+    public String getOnStreet() {
+        return onStreet;
+    }
 
-	public String getDateResolved() {
-		return dateResolved;
-	}
+    public void setOnStreet(String onStreet) {
+        this.onStreet = onStreet;
+    }
 
-	public void setDateResolved(String dateResolved) {
-		this.dateResolved = dateResolved;
-	}
+    public String getWeapon() {
+        return weapon;
+    }
 
-	public String getTypeOfResolution() {
-		return typeOfResolution;
-	}
+    public void setWeapon(String weapon) {
+        this.weapon = weapon;
+    }
 
-	public void setTypeOfResolution(String typeOfResolution) {
-		this.typeOfResolution = typeOfResolution;
-	}
+    public String getDateOfCrime() {
+        return dateOfCrime;
+    }
+
+    public void setDateOfCrime(String dateOfCrime) {
+        this.dateOfCrime = dateOfCrime;
+    }
+
+    public String getDateResolved() {
+        return dateResolved;
+    }
+
+    public void setDateResolved(String dateResolved) {
+        this.dateResolved = dateResolved;
+    }
+
+    public String getTypeOfResolution() {
+        return typeOfResolution;
+    }
+
+    public void setTypeOfResolution(String typeOfResolution) {
+        this.typeOfResolution = typeOfResolution;
+    }
 }
