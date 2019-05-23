@@ -56,4 +56,53 @@ public class XmlParser {
 		NodeList nodes = (NodeList) expression.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
 		return nodes.getLength();
 	}
+	
+	public static int getCrimesWithWeaponCount(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
+		XPathFactory factory = XPathFactory.newInstance();
+		XPath path = factory.newXPath();
+		
+		XPathExpression expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR =" + numberToCityPart(n) + "]/pouzitaZbran");
+		NodeList nodes = (NodeList) expression.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+		
+		int counter = 0;
+		for (int i = 0; i < nodes.getLength(); i++) {
+			if (!nodes.item(i).getTextContent().equals("0")) {
+				counter++;
+			}
+		}
+		
+		return counter;
+	}
+	
+	public static int getCrimesCommitedOnStreet(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
+		XPathFactory factory = XPathFactory.newInstance();
+		XPath path = factory.newXPath();
+		
+		XPathExpression expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR =" + numberToCityPart(n) + "]/spachanNaUlici");
+		NodeList nodes = (NodeList) expression.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+		
+		int counter = 0;
+		for (int i = 0; i < nodes.getLength(); i++) {
+			if (nodes.item(i).getTextContent().equals("1")) {
+				counter++;
+			}
+		}
+		
+		return counter;
+	}
+	
+	public static int sumOfDamageCaused(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
+		XPathFactory factory = XPathFactory.newInstance();
+		XPath path = factory.newXPath();
+		
+		XPathExpression expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR =" + numberToCityPart(n) + "]/vzniknutaSkoda");
+		NodeList nodes = (NodeList) expression.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+		
+		int damage = 0;
+		for (int i = 0; i < nodes.getLength(); i++) {
+			damage += Integer.parseInt(nodes.item(i).getTextContent());
+		}
+		
+		return damage;
+	}
 }
