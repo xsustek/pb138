@@ -26,7 +26,6 @@ public class BrnoController {
         return "index";
     }
 
-    /**
     @RequestMapping(value = "/xml/{region}", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public BrnoDataEntities xml(@PathVariable String region) {
@@ -36,5 +35,4 @@ public class BrnoController {
                 new BrnoDataEntity("", "", region, "", "", "", "", "", "", "", "")
         });
     }
-    */
 }

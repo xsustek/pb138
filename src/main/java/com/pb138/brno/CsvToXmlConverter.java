@@ -48,16 +48,16 @@ public class CsvToXmlConverter {
      * Initializes map for parsing csv file
      */
     private void initializeMap() {
-    	headers.put(1, "UtvarPCR");
-        headers.put(2, "StadiumCinu");
-        headers.put(3, "DruhCinu");
-        headers.put(4, "KlasifikaceCinu");
-        headers.put(5, "SpachanNaUlici");
-        headers.put(7, "PouzitaZbran");
-        headers.put(17, "VzniknutaSkoda");
-        headers.put(9, "DatumVykonania");
-        headers.put(26, "DatumUkoncenia");
-        headers.put(27, "TypUkoncenia");
+    	headers.put(1, "utvarPCR");
+        headers.put(2, "stadiumCinu");
+        headers.put(3, "druhCinu");
+        headers.put(4, "klasifikaceCinu");
+        headers.put(5, "spachanNaUlici");
+        headers.put(7, "pouzitaZbran");
+        headers.put(17, "vzniknutaSkoda");
+        headers.put(9, "datumVykonania");
+        headers.put(26, "datumUkoncenia");
+        headers.put(27, "typUkoncenia");
     }
 
     
@@ -71,14 +71,14 @@ public class CsvToXmlConverter {
      */
     public Document getDocument(String csvPath) throws IOException, TransformerException {
     	
-        Element yearElement = document.createElement("Rok");
+        Element yearElement = document.createElement("rok");
         yearElement.setAttribute("rok", "2016");
         document.appendChild(yearElement);
-        Element cityElement = document.createElement("Mesto");
+        Element cityElement = document.createElement("mesto");
         cityElement.setAttribute("nazev", "Brno");
         cityElement.setAttribute("obyvatele", "377549");
         yearElement.appendChild(cityElement);
-        Element crimesElement = document.createElement("TrestneCiny");
+        Element crimesElement = document.createElement("trestneCiny");
         cityElement.appendChild(crimesElement);
         
         // CSVReader(reader, ';', '"')  
@@ -91,7 +91,7 @@ public class CsvToXmlConverter {
                 		isFirst = false;
                 		continue;
                 	}
-                    Element crimeElement = document.createElement("TrestnyCin");
+                    Element crimeElement = document.createElement("trestnyCin");
                     headers.forEach((index, header) -> {
                         Element el = document.createElement(header);
                         el.setTextContent(line[index]);
