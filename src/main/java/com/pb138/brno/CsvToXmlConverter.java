@@ -48,7 +48,7 @@ public class CsvToXmlConverter {
      * Initializes map for parsing csv file
      */
     private void initializeMap() {
-    	headers.put(1, "utvarPCR");
+        headers.put(1, "utvarPCR");
         headers.put(2, "stadiumCinu");
         headers.put(3, "druhCinu");
         headers.put(4, "klasifikaceCinu");
@@ -70,7 +70,7 @@ public class CsvToXmlConverter {
      * @throws TransformerException
      */
     public Document getDocument(String csvPath) throws IOException, TransformerException {
-    	
+        
         Element yearElement = document.createElement("rok");
         yearElement.setAttribute("rok", "2016");
         document.appendChild(yearElement);
@@ -85,12 +85,12 @@ public class CsvToXmlConverter {
         CSVParser csvParser = new CSVParserBuilder().withSeparator(';').build();
         try (FileReader reader = new FileReader(csvPath)) {
             try (CSVReader csvReader = new CSVReaderBuilder(new FileReader(csvPath)).withCSVParser(csvParser).build()) {
-            	boolean isFirst = true;
+                boolean isFirst = true;
                 for (String[] line : csvReader) {
-                	if (isFirst) {
-                		isFirst = false;
-                		continue;
-                	}
+                    if (isFirst) {
+                        isFirst = false;
+                        continue;
+                    }
                     Element crimeElement = document.createElement("trestnyCin");
                     headers.forEach((index, header) -> {
                         Element el = document.createElement(header);

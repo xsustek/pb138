@@ -1,5 +1,8 @@
 package com.pb138.brno;
 
+/**
+ * Model class for crime statistics
+ */
 public class BrnoCrimeStatistics {
     private int count;
     private int damage;

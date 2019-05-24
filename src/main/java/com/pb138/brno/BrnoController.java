@@ -15,6 +15,12 @@ public class BrnoController {
     private CsvToXmlConverter csvToXmlConverter;
     private XmlParser xmlParser;
 
+    /**
+     * Controller init function
+
+     * @param csvToXmlConverter
+     * @param xmlParser
+     */
     public BrnoController(CsvToXmlConverter csvToXmlConverter, XmlParser xmlParser) {
         this.xmlParser = xmlParser;
 
@@ -32,7 +38,7 @@ public class BrnoController {
         String region = request.getParameter("region");
 
         if (region == null) {
-            region = "str";
+            region = "brno";
         }
 
         Integer regionInt = regionToInt(region);
@@ -53,7 +59,7 @@ public class BrnoController {
     @ResponseBody
     public BrnoCrimeStatistics api(@PathVariable String region) {
         if (region == null) {
-            region = "str";
+            region = "brno";
         }
 
         int regionInt = regionToInt(region);
@@ -73,6 +79,8 @@ public class BrnoController {
 
     private int regionToInt(String region) {
         switch (region) {
+            case "brno":
+                return 10;
             case "str":
                 return 1;
             case "zbv":
