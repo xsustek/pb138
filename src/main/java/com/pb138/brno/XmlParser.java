@@ -1,14 +1,20 @@
 package com.pb138.brno;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathException;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -184,5 +190,43 @@ public class XmlParser {
         }
 
         return damage;
+    }
+    
+    
+    /**
+     * This method calculates average time of crime resolution in given region
+     * 
+     * @param n number corresponding to region
+     * @return average time 
+     * @throws XPathException
+     * @throws Exception
+     * @throws IOException
+     * @throws SAXException
+     */
+    public double averageTimeOfCrime(int n) throws XPathException, Exception, IOException, SAXException {
+        XPathFactory factory = XPathFactory.newInstance();
+        XPath path = factory.newXPath();
+        XPathExpression expressionStart;
+        XPathExpression expressionEnd;
+
+        if (n == 10) {
+        	expressionStart = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumVykonania");
+        	expressionEnd = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumUkoncenia");
+        } else {
+        	expressionStart = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/datumVykonania");
+        	expressionEnd = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/datumUkoncenia");
+        }
+        NodeList nodesStart = (NodeList) expressionStart.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodesEnd = (NodeList) expressionEnd.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+
+        double averageTime = 0;
+        SimpleDateFormat myFormat = new SimpleDateFormat("dd.MM.yyyy");
+        for (int i = 0; i < nodesStart.getLength(); i++) {
+        	Date dateStart = myFormat.parse(nodesStart.item(i).getTextContent());
+            Date dateEnd = myFormat.parse(nodesEnd.item(i).getTextContent());
+            averageTime += (dateEnd.getTime() - dateStart.getTime());
+        }
+
+        return (averageTime / nodesStart.getLength());
     }
 }

@@ -65,7 +65,7 @@ public class CsvToXmlConverter {
      * This method creates new xml document and builds it using the given csv file
      * 
      * @param csvPath path to csv file
-     * @return Converted xml document
+     * @return created xml document
      * @throws IOException
      * @throws TransformerException
      */
@@ -81,7 +81,6 @@ public class CsvToXmlConverter {
         Element crimesElement = document.createElement("trestneCiny");
         cityElement.appendChild(crimesElement);
         
-        // CSVReader(reader, ';', '"')  
         CSVParser csvParser = new CSVParserBuilder().withSeparator(';').build();
         try (FileReader reader = new FileReader(csvPath)) {
             try (CSVReader csvReader = new CSVReaderBuilder(new FileReader(csvPath)).withCSVParser(csvParser).build()) {
