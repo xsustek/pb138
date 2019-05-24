@@ -47,12 +47,15 @@ public class XmlParser {
 		return db.parse("src/main/resources/output.xml");
 	}
 	
+	public static String getRegionName(int n) throws IllegalArgumentException {
+		return numberToCityPart(n);
+	}
 	
 	public static int getCrimeCount(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
 		XPathFactory factory = XPathFactory.newInstance();
 		XPath path = factory.newXPath();
 		
-		XPathExpression expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR =" + numberToCityPart(n) + "]");
+		XPathExpression expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']");
 		NodeList nodes = (NodeList) expression.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
 		return nodes.getLength();
 	}
@@ -61,7 +64,7 @@ public class XmlParser {
 		XPathFactory factory = XPathFactory.newInstance();
 		XPath path = factory.newXPath();
 		
-		XPathExpression expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR =" + numberToCityPart(n) + "]/pouzitaZbran");
+		XPathExpression expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/pouzitaZbran");
 		NodeList nodes = (NodeList) expression.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
 		
 		int counter = 0;
@@ -78,7 +81,7 @@ public class XmlParser {
 		XPathFactory factory = XPathFactory.newInstance();
 		XPath path = factory.newXPath();
 		
-		XPathExpression expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR =" + numberToCityPart(n) + "]/spachanNaUlici");
+		XPathExpression expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/spachanNaUlici");
 		NodeList nodes = (NodeList) expression.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
 		
 		int counter = 0;
@@ -95,7 +98,7 @@ public class XmlParser {
 		XPathFactory factory = XPathFactory.newInstance();
 		XPath path = factory.newXPath();
 		
-		XPathExpression expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR =" + numberToCityPart(n) + "]/vzniknutaSkoda");
+		XPathExpression expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/vzniknutaSkoda");
 		NodeList nodes = (NodeList) expression.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
 		
 		int damage = 0;
