@@ -16,7 +16,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 var region = getUrlParameter('region');
 
 $( document ).ready(function() {
-  if (region === true) {
+  if (region === undefined) {
     $("#map").attr("src","maps/start.png");
   } else {
     $("#map").attr("src","maps/" + region + ".png");
