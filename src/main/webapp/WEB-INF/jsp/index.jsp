@@ -22,7 +22,6 @@
 		  
 		  <div class="row justify-content-center">
 		  	<div class="col-6">
-				<form>
 				    <label class="label" for="inlineFormCustomSelect">Zvolte Městkou Část</label>
 				    <select class="form-control form-control-lg" id="inlineFormCustomSelect" name="region" style="width: 100%">
 				      <option>Zvolte...</option>
@@ -36,10 +35,9 @@
 				      <option value="zid">Židenice</option>
 				      <option value="dpv">OŽP A Doprovodu Vlaků</option>
 				    </select>
-				    <div class="text-right">
-				  		<button type="submit" class="btn btn-primary" style="right: 0; margin-top: 10px;">Zobrazit statistiky</button>
-				  	</div>
-				</form>
+				    <!--<div class="text-right">
+				  		<button type="button" id="submit" class="btn btn-primary" style="right: 0; margin-top: 10px;">Zobrazit statistiky</button>
+				  	</div>-->
 			</div>
 			<div class="col-6 text-center align-middle h3" id="region">${nazov}</div>
 		  </div>
@@ -53,19 +51,19 @@
 				  <tbody>
 				    <tr>
 				      <td scope="row">Trestných činov celkom:</td>
-				      <td>${celkom}</td>
+				      <td id="crime_count">${celkom}</td>
 				    </tr>
 				    <tr>
 				      <td scope="row">Celková škoda trestných činov:</td>
-				      <td>${skoda} Kč</td>
+				      <td id="crime_damage">${skoda} Kč</td>
 				    </tr>
 				    <tr>
 				      <td scope="row">Počet trestných činov spáchaných na ulici:</td>
-				      <td>${ulica}</td>
+				      <td id="crime_on_street">${ulica}</td>
 				    </tr>
 				    <tr>
 				      <td scope="row">Počet trestných činov spáchaných so zbraňov:</td>
-				      <td>${zbran}</td>
+				      <td id="crime_weapon">${zbran}</td>
 				    </tr>
 				  </tbody>
 				</table>

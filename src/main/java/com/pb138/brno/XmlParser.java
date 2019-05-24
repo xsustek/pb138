@@ -10,13 +10,15 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
+@Service
 public class XmlParser {	
-	
-	private static String numberToCityPart(int cityPart) {
+
+	private Document document;
+	private String numberToCityPart(int cityPart) {
 		switch (cityPart) {
 		case 1:
 			return "OOP BRNO - STŘED";
@@ -41,17 +43,19 @@ public class XmlParser {
 		}
 	}	
 	
-	private static Document getDoc() throws ParserConfigurationException, IOException, SAXException {
+	private Document getDoc() throws ParserConfigurationException, IOException, SAXException {
+		if(document != null) return document;
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
-		return db.parse("src/main/resources/output.xml");
+		document = db.parse("src/main/resources/output.xml");
+		return document;
 	}
 	
-	public static String getRegionName(int n) throws IllegalArgumentException {
+	public String getRegionName(int n) throws IllegalArgumentException {
 		return numberToCityPart(n);
 	}
 	
-	public static int getCrimeCount(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
+	public int getCrimeCount(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
 		XPathFactory factory = XPathFactory.newInstance();
 		XPath path = factory.newXPath();
 		
@@ -60,7 +64,7 @@ public class XmlParser {
 		return nodes.getLength();
 	}
 	
-	public static int getCrimesWithWeaponCount(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
+	public int getCrimesWithWeaponCount(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
 		XPathFactory factory = XPathFactory.newInstance();
 		XPath path = factory.newXPath();
 		
@@ -77,7 +81,7 @@ public class XmlParser {
 		return counter;
 	}
 	
-	public static int getCrimesCommitedOnStreet(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
+	public int getCrimesCommitedOnStreet(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
 		XPathFactory factory = XPathFactory.newInstance();
 		XPath path = factory.newXPath();
 		
@@ -94,7 +98,7 @@ public class XmlParser {
 		return counter;
 	}
 	
-	public static int sumOfDamageCaused(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
+	public int sumOfDamageCaused(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
 		XPathFactory factory = XPathFactory.newInstance();
 		XPath path = factory.newXPath();
 		
