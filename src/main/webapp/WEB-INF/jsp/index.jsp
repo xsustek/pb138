@@ -21,7 +21,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-6">
+                <div class="col-md-6 col-sm-12">
                     <label class="label" for="inlineFormCustomSelect">Zvolte Městkou Část</label>
                     <select class="form-control form-control-lg" id="inlineFormCustomSelect" name="region" style="width: 100%">
                         <option value="brno" selected>Celé Brno</option>
@@ -36,31 +36,79 @@
                         <option value="dpv">OŽP A Doprovodu Vlaků</option>
                     </select>
                 </div>
-                <div class="col-6 text-center align-middle h3" id="region">${nazov}</div>
+                <div class="col-md-6 col-sm-12 text-center align-bottom h2" id="region">${nazov}</div>
             </div>
 
             <div class="row justify-content-center" style="margin: 50px 0;">
-                <div class="col-6">
+                <div class="col-md-6 col-sm-12">
                     <img id="map" src="/maps/start.png" />
                 </div>
-                <div class="col-6 text-center" id="stats">
-                    <table class="table text-left">
+                <div class="col-md-6 col-sm-12" id="stats">
+                    <table class="table">
                         <tbody>
                             <tr>
-                                <td scope="row">Trestných činov celkom:</td>
-                                <td id="crime_count">${celkom}</td>
+                                <td scope="row" class="text-left">Počet obyvateľov v mestkej časti:</td>
+                                <td id="population" class="text-right">${obyvatelia}</td>
                             </tr>
                             <tr>
-                                <td scope="row">Celková škoda trestných činov:</td>
-                                <td id="crime_damage">${skoda} Kč</td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                                <td scope="row">Počet trestných činov spáchaných na ulici:</td>
-                                <td id="crime_on_street">${ulica}</td>
+                                <td scope="row" class="text-left">Trestných činov celkom:</td>
+                                <td id="crime_count" class="text-right">${celkom}</td>
                             </tr>
                             <tr>
-                                <td scope="row">Počet trestných činov spáchaných so zbraňov:</td>
-                                <td id="crime_weapon">${zbran}</td>
+                                <td scope="row" class="text-left">Celková škoda trestných činov:</td>
+                                <td id="crime_damage" class="text-right">${skoda} Kč</td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-left">Počet trestných činov spáchaných na ulici:</td>
+                                <td id="crime_on_street" class="text-right">${ulica}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-left">Počet trestných činov spáchaných so zbraňov:</td>
+                                <td id="crime_weapon" class="text-right">${zbran}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-left">Počet zločinov:</td>
+                                <td id="crime_zlocin" class="text-right">${zlocin}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-left">Počet prečinov:</td>
+                                <td id="crime_precin" class="text-right">${precin}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-left">Počet pokusov o trestný čin:</td>
+                                <td id="crime_prepared" class="text-right">${priprava}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-left">Počet plánovaných trestných činov:</td>
+                                <td id="crime_planned" class="text-right">${planned}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-left">Počet vykonaných trestných činov:</td>
+                                <td id="crime_executed" class="text-right">${executed}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-left">Počet odložených prípadov:</td>
+                                <td id="crime_cold" class="text-right">${cold}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td scope="row" class="text-left">Priemerná doba vyriešenia prípadu:</td>
+                                <td id="crime_average" class="text-right">${average}</td>
                             </tr>
                         </tbody>
                     </table>

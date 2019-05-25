@@ -26,15 +26,26 @@ const parseXml = xml => ({
     damage: getNodeValue(xml, "damage"),
     street: getNodeValue(xml, "street"),
     withWeaponCount: getNodeValue(xml, "withWeaponCount"),
-    region: getNodeValue(xml, "region")
+    region: getNodeValue(xml, "region"),
+    zlocin: getNodeValue(xml, "zlocin"),
+    precin: getNodeValue(xml, "precin"),
+    planned: getNodeValue(xml, "planned"),
+    prepared: getNodeValue(xml, "prepared"),
 });
 
 const fillValues = values => {
     $("#region").text(values.region);
     $("#crime_count").text(values.count);
-    $("#crime_damage").text(values.damage);
+    $("#crime_damage").text(formatNumber(values.damage) + " Kč");
     $("#crime_on_street").text(values.street);
     $("#crime_weapon").text(values.withWeaponCount);
+    $("#crime_zlocin").text(values.zlocin);
+    $("#crime_precin").text(values.precin);
+    $("#crime_prepared").text(values.prepared);
+    $("#crime_planned").text(values.planned);
+    $("#crime_executed").text(values.executed);
+    $("#crime_cold").text(values.cold);
+    $("#crime_average").text(values.average);
 };
 
 const setMap = region => {
@@ -47,11 +58,26 @@ const setMap = region => {
 
 const setSelect = region => $("#inlineFormCustomSelect").val(region);
 
+const formatNumber = value => {
+    var num = value;
+    var result = "";
+    var gap_size = 3;
+
+    while (num.length > 0)
+    {
+        result = num.substring(num.length - gap_size, num.length) + " " + result;
+        num = num.substring(0, num.length - gap_size);
+    }
+
+    return result;
+}
 
 $(document).ready(function () {
     let region = getUrlParameter('region');
+    let number = $("#crime_damage").val();
     setMap(region);
     setSelect(region);
+    $("#crime_damage").text(formatNumber(number) + " Kč");
     $("#inlineFormCustomSelect").change(e => {
         let region = $("#inlineFormCustomSelect").val();
         fetch(`/api/crimes/${region}`)

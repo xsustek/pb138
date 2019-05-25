@@ -8,6 +8,15 @@ public class BrnoCrimeStatistics {
     private int damage;
     private int street;
     private int withWeaponCount;
+    private int zlocin;
+    private int precin;
+    private int planned;
+    private int prepared;
+    private int executed;
+    private double average;
+    private int cold;
+    private int preparators;
+    private int population;
     private String region;
 
     public int getCount() {
@@ -48,5 +57,77 @@ public class BrnoCrimeStatistics {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+ 
+    public int getZlocin() {
+        return zlocin;
+    }
+
+    public void setZlocin(int zlocin) {
+        this.zlocin = zlocin;
+    }
+
+    public int getPrecin() {
+        return precin;
+    }
+
+    public void setPrecin(int precin) {
+        this.precin = precin;
+    }
+
+    public int getPlanned() {
+        return planned;
+    }
+
+    public void setPlanned(int planned) {
+        this.planned = planned;
+    }
+
+    public int getPrepared() {
+        return prepared;
+    }
+
+    public void setPrepared(int prepared) {
+        this.prepared = prepared;
+    }
+
+    public int getExecuted() {
+        return executed;
+    }
+
+    public void setExecuted(int executed) {
+        this.executed = executed;
+    }
+
+    public double getAverage() {
+        return average;
+    }
+
+    public void setAverage(double average) {
+        this.average = average;
+    }
+
+    public int getCold() {
+        return cold;
+    }
+
+    public void setCold(int cold) {
+        this.cold = cold;
+    }
+
+    public int getPreparators() {
+        return preparators;
+    }
+
+    public void setPreparators(int preparators) {
+        this.preparators = preparators;
+    }
+    
+    public int getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(int population) {
+        this.population = population;
     }
 }

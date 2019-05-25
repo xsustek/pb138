@@ -22,8 +22,7 @@ public class XmlParser {
     private static XPathExpression expression1;
     private static XPathExpression expression2;
     private Document document;
-    
-    
+
     /**
      * Converts number to city part string for comparison
      * 
@@ -64,7 +63,7 @@ public class XmlParser {
      * @param cityPart
      * @return population number
      */
-    private int getCityPartPopulation(int cityPart) {
+    public int getCityPartPopulation(int cityPart) {
         switch (cityPart) {
         case 1:
             return 82874;
@@ -85,7 +84,7 @@ public class XmlParser {
         case 9:
             return 377549;
         case 10:
-        	return 377549;
+            return 377549;
         default: 
             throw new IllegalArgumentException();
         }
@@ -218,11 +217,11 @@ public class XmlParser {
      */
     public double averageTimeOfCrime(int n) throws Exception {
         if (n == 10) {
-        	expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumVykonania");
-        	expression2 = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumUkoncenia");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumVykonania");
+            expression2 = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumUkoncenia");
         } else {
-        	expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/datumVykonania");
-        	expression2 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/datumUkoncenia");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/datumVykonania");
+            expression2 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/datumUkoncenia");
         }
         NodeList nodesStart = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
         NodeList nodesEnd = (NodeList) expression2.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
@@ -247,7 +246,7 @@ public class XmlParser {
      * @throws Exception
      */
     private NodeList getCrimeTypes(int n) throws Exception {
-    	if (n == 10) {
+        if (n == 10) {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/druhCinu");
         } else {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/druhCinu");
@@ -268,18 +267,16 @@ public class XmlParser {
         NodeList nodes = getCrimeTypes(n);
         int counter = 0;
         for (int i = 0; i < nodes.getLength(); i++) {
-        	if (nodes.item(i).getTextContent().equals("18")) {
-        		counter++;
-        
-        	}
+            if (nodes.item(i).getTextContent().equals("18")) {
+                counter++;
+            }
         }
         return counter;
     }
-    
-    
+
     /**
      * Gets number of zlocin from xml file
-     * 
+     *
      * @param n city part
      * @return number of zlocin
      * @throws Exception
@@ -288,15 +285,13 @@ public class XmlParser {
         NodeList nodes = getCrimeTypes(n);
         int counter = 0;
         for (int i = 0; i < nodes.getLength(); i++) {
-        	if (nodes.item(i).getTextContent().equals("11")) {
-        		counter++;
-        
-        	}
+            if (nodes.item(i).getTextContent().equals("11")) {
+                counter++;
+            }
         }
         return counter;
     }
-    
-    
+
     /**
      * Get list of stage nodes
      *  
@@ -305,7 +300,7 @@ public class XmlParser {
      * @throws Exception
      */
     private NodeList getStageList(int n) throws Exception {
-    	if (n == 10) {
+        if (n == 10) {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/stadiumCinu");
         } else {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/stadiumCinu");
@@ -313,8 +308,7 @@ public class XmlParser {
         NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
         return nodes;
     }
-    
-    
+
     /**
      * Gets number of executed crimes
      * 
@@ -327,14 +321,13 @@ public class XmlParser {
 
         int counter = 0;
         for (int i = 0; i < nodes.getLength(); i++) {
-        	if (nodes.item(i).getTextContent().equals("3")) {
-        		counter++;
-        	}
+            if (nodes.item(i).getTextContent().equals("3")) {
+                counter++;
+            }
         }
         return counter;
     }
-    
-    
+
     /**
      * Gets number of prepared crimes
      * 
@@ -347,14 +340,13 @@ public class XmlParser {
 
         int counter = 0;
         for (int i = 0; i < nodes.getLength(); i++) {
-        	if (nodes.item(i).getTextContent().equals("2")) {
-        		counter++;
-        	}
+            if (nodes.item(i).getTextContent().equals("2")) {
+                counter++;
+            }
         }
         return counter;
     }
-    
-    
+
     /**
      * Gets number of planned crimes
      * 
@@ -367,14 +359,13 @@ public class XmlParser {
 
         int counter = 0;
         for (int i = 0; i < nodes.getLength(); i++) {
-        	if (nodes.item(i).getTextContent().equals("1")) {
-        		counter++;
-        	}
+            if (nodes.item(i).getTextContent().equals("1")) {
+                counter++;
+            }
         }
         return counter;
     }
-    
-    
+
     /**
      * Get list of resolution type nodes
      *  
@@ -383,7 +374,7 @@ public class XmlParser {
      * @throws Exception
      */
     private NodeList getResolutionTypeList(int n) throws Exception {
-    	if (n == 10) {
+        if (n == 10) {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/typUkoncenia");
         } else {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/typUkoncenia");
@@ -391,8 +382,7 @@ public class XmlParser {
         NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
         return nodes;
     }
-    
-    
+
     /**
      * Gets number of planned crimes
      * 
@@ -404,14 +394,13 @@ public class XmlParser {
         NodeList nodes = getResolutionTypeList(n);
         int counter = 0;
         for (int i = 0; i < nodes.getLength(); i++) {
-        	if (nodes.item(i).getTextContent().equals("1")) {
-        		counter++;
-        	}
+            if (nodes.item(i).getTextContent().equals("1")) {
+                counter++;
+            }
         }
         return counter;
     }
-    
-    
+
     /**
      * Gets number of cold cases
      * 
@@ -423,9 +412,9 @@ public class XmlParser {
         NodeList nodes = getResolutionTypeList(n);
         int counter = 0;
         for (int i = 0; i < nodes.getLength(); i++) {
-        	if (nodes.item(i).getTextContent().equals("5")) {
-        		counter++;
-        	}
+            if (nodes.item(i).getTextContent().equals("5")) {
+                counter++;
+            }
         }
         return counter;
     }

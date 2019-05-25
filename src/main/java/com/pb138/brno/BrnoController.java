@@ -49,6 +49,15 @@ public class BrnoController {
             model.put("ulica", xmlParser.getCrimesCommitedOnStreet(regionInt));
             model.put("zbran", xmlParser.getCrimesWithWeaponCount(regionInt));
             model.put("nazov", xmlParser.getRegionName(regionInt));
+            model.put("priemer", xmlParser.averageTimeOfCrime(regionInt));
+            model.put("cold", xmlParser.getNumberOfColdCases(regionInt));
+            model.put("executed", xmlParser.getNumberOfExecutedCrimes(regionInt));
+            model.put("prep", xmlParser.getNumberOfPerpetratorsCaught(regionInt));
+            model.put("planned", xmlParser.getNumberOfPlannedCrimes(regionInt));
+            model.put("precin", xmlParser.getNumberOfPrecin(regionInt));
+            model.put("priprava", xmlParser.getNumberOfPreparedCrimes(regionInt));
+            model.put("zlocin", xmlParser.getNumberOfZlocin(regionInt));
+            model.put("obyvatelia", xmlParser.getCityPartPopulation(regionInt));
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -69,6 +78,14 @@ public class BrnoController {
             statistics.setDamage(xmlParser.sumOfDamageCaused(regionInt));
             statistics.setStreet(xmlParser.getCrimesCommitedOnStreet(regionInt));
             statistics.setWithWeaponCount(xmlParser.getCrimesWithWeaponCount(regionInt));
+            statistics.setPlanned(xmlParser.getNumberOfPlannedCrimes(regionInt));
+            statistics.setPrepared(xmlParser.getNumberOfPreparedCrimes(regionInt));
+            statistics.setZlocin(xmlParser.getNumberOfZlocin(regionInt));
+            statistics.setPrecin(xmlParser.getNumberOfPrecin(regionInt));
+            statistics.setPopulation(xmlParser.getCityPartPopulation(regionInt));
+            statistics.setAverage(xmlParser.averageTimeOfCrime(regionInt));
+            statistics.setPreparators(xmlParser.getNumberOfPerpetratorsCaught(regionInt));
+            statistics.setCold(xmlParser.getNumberOfColdCases(regionInt));
             statistics.setRegion(xmlParser.getRegionName(regionInt));
         } catch (Exception e) {
             System.out.println(e);
