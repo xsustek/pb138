@@ -1,32 +1,28 @@
 package com.pb138.brno;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathException;
 import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * Class for parsing XML file
  */
-
 @Service
 public class XmlParser {	
-
+    private static XPathFactory factory = XPathFactory.newInstance();
+    private static XPath path = factory.newXPath();
+    private static XPathExpression expression1;
+    private static XPathExpression expression2;
     private Document document;
+    
     private String numberToCityPart(int cityPart) {
         switch (cityPart) {
         case 1:
@@ -54,7 +50,7 @@ public class XmlParser {
         }
     }	
     
-    private Document getDoc() throws ParserConfigurationException, IOException, SAXException {
+    private Document getDoc() throws Exception {
         if(document != null) return document;
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
@@ -78,22 +74,15 @@ public class XmlParser {
      *
      * @param n Int value of region
      * @return Int count of crimes in region
-     * @throws XPathExpressionException
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
+     * @throws Exception
      */
-    public int getCrimeCount(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
-        XPathFactory factory = XPathFactory.newInstance();
-        XPath path = factory.newXPath();
-        XPathExpression expression;
-
+    public int getCrimeCount(int n) throws Exception {
         if (n == 10) {
-            expression = path.compile("/rok/mesto/trestneCiny/trestnyCin");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin");
         } else {
-            expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']");
         }
-        NodeList nodes = (NodeList) expression.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
         return nodes.getLength();
     }
 
@@ -102,22 +91,15 @@ public class XmlParser {
      *
      * @param n Int value of region
      * @return Int number of crimes
-     * @throws XPathExpressionException
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
+     * @throws Exception
      */
-    public int getCrimesWithWeaponCount(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
-        XPathFactory factory = XPathFactory.newInstance();
-        XPath path = factory.newXPath();
-        XPathExpression expression;
-
+    public int getCrimesWithWeaponCount(int n) throws Exception {
         if (n == 10) {
-            expression = path.compile("/rok/mesto/trestneCiny/trestnyCin/pouzitaZbran");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/pouzitaZbran");
         } else {
-            expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/pouzitaZbran");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/pouzitaZbran");
         }
-        NodeList nodes = (NodeList) expression.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
 
         int counter = 0;
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -134,23 +116,16 @@ public class XmlParser {
      *
      * @param n Int value of region
      * @return Int count of crimes
-     * @throws XPathExpressionException
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
+     * @throws Exception
      */
-    public int getCrimesCommitedOnStreet(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
-        XPathFactory factory = XPathFactory.newInstance();
-        XPath path = factory.newXPath();
-        XPathExpression expression;
-
+    public int getCrimesCommitedOnStreet(int n) throws Exception {
         if (n == 10) {
-            expression = path.compile("/rok/mesto/trestneCiny/trestnyCin/spachanNaUlici");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/spachanNaUlici");
         } else {
-            expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/spachanNaUlici");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/spachanNaUlici");
         }
 
-        NodeList nodes = (NodeList) expression.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
 
         int counter = 0;
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -167,22 +142,15 @@ public class XmlParser {
      *
      * @param n Int value of region
      * @return Int damage
-     * @throws XPathExpressionException
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
+     * @throws Exception
      */
-    public int sumOfDamageCaused(int n) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
-        XPathFactory factory = XPathFactory.newInstance();
-        XPath path = factory.newXPath();
-        XPathExpression expression;
-
+    public int sumOfDamageCaused(int n) throws Exception {
         if (n == 10) {
-            expression = path.compile("/rok/mesto/trestneCiny/trestnyCin/vzniknutaSkoda");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/vzniknutaSkoda");
         } else {
-            expression = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/vzniknutaSkoda");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/vzniknutaSkoda");
         }
-        NodeList nodes = (NodeList) expression.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
 
         int damage = 0;
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -198,26 +166,18 @@ public class XmlParser {
      * 
      * @param n number corresponding to region
      * @return average time 
-     * @throws XPathException
      * @throws Exception
-     * @throws IOException
-     * @throws SAXException
      */
-    public double averageTimeOfCrime(int n) throws XPathException, Exception, IOException, SAXException {
-        XPathFactory factory = XPathFactory.newInstance();
-        XPath path = factory.newXPath();
-        XPathExpression expressionStart;
-        XPathExpression expressionEnd;
-
+    public double averageTimeOfCrime(int n) throws Exception {
         if (n == 10) {
-        	expressionStart = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumVykonania");
-        	expressionEnd = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumUkoncenia");
+        	expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumVykonania");
+        	expression2 = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumUkoncenia");
         } else {
-        	expressionStart = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/datumVykonania");
-        	expressionEnd = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/datumUkoncenia");
+        	expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/datumVykonania");
+        	expression2 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/datumUkoncenia");
         }
-        NodeList nodesStart = (NodeList) expressionStart.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
-        NodeList nodesEnd = (NodeList) expressionEnd.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodesStart = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodesEnd = (NodeList) expression2.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
 
         double averageTime = 0;
         SimpleDateFormat myFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -228,5 +188,207 @@ public class XmlParser {
         }
 
         return (averageTime / nodesStart.getLength());
+    }
+
+    
+    /**
+     * Gets list of crime type nodes
+     * 
+     * @param n city part
+     * @return list of nodes
+     * @throws Exception
+     */
+    private NodeList getCrimeTypes(int n) throws Exception {
+    	if (n == 10) {
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/druhCinu");
+        } else {
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/druhCinu");
+        }
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        return nodes;
+    }
+    
+    
+    /**
+     * Gets number of precin from xml file
+     * 
+     * @param n city part
+     * @return number of precin
+     * @throws Exception
+     */
+    public int getNumberOfPrecin(int n) throws Exception {
+        NodeList nodes = getCrimeTypes(n);
+        int counter = 0;
+        for (int i = 0; i < nodes.getLength(); i++) {
+        	if (nodes.item(i).getTextContent().equals("18")) {
+        		counter++;
+        
+        	}
+        }
+        return counter;
+    }
+    
+    
+    /**
+     * Gets number of zlocin from xml file
+     * 
+     * @param n city part
+     * @return number of zlocin
+     * @throws Exception
+     */
+    public int getNumberOfZlocin(int n) throws Exception {
+        NodeList nodes = getCrimeTypes(n);
+        int counter = 0;
+        for (int i = 0; i < nodes.getLength(); i++) {
+        	if (nodes.item(i).getTextContent().equals("11")) {
+        		counter++;
+        
+        	}
+        }
+        return counter;
+    }
+    
+    
+    /**
+     * Get list of stage nodes
+     *  
+     * @param n city part
+     * @return list of stage nodes
+     * @throws Exception
+     */
+    private NodeList getStageList(int n) throws Exception {
+    	if (n == 10) {
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/stadiumCinu");
+        } else {
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/stadiumCinu");
+        }
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        return nodes;
+    }
+    
+    
+    /**
+     * Gets number of executed crimes
+     * 
+     * @param n city part
+     * @return number of executed crimes
+     * @throws Exception
+     */
+    public int getNumberOfExecutedCrimes(int n) throws Exception {
+        NodeList nodes = getStageList(n);
+
+        int counter = 0;
+        for (int i = 0; i < nodes.getLength(); i++) {
+        	if (nodes.item(i).getTextContent().equals("3")) {
+        		counter++;
+        	}
+        }
+        return counter;
+    }
+    
+    
+    /**
+     * Gets number of prepared crimes
+     * 
+     * @param n city part
+     * @return number of prepared crimes
+     * @throws Exception
+     */
+    public int getNumberOfPreparedCrimes(int n) throws Exception {
+        NodeList nodes = getStageList(n);
+
+        int counter = 0;
+        for (int i = 0; i < nodes.getLength(); i++) {
+        	if (nodes.item(i).getTextContent().equals("2")) {
+        		counter++;
+        	}
+        }
+        return counter;
+    }
+    
+    
+    /**
+     * Gets number of planned crimes
+     * 
+     * @param n city part
+     * @return number of planned crimes
+     * @throws Exception
+     */
+    public int getNumberOfPlannedCrimes(int n) throws Exception {
+        NodeList nodes = getStageList(n);
+
+        int counter = 0;
+        for (int i = 0; i < nodes.getLength(); i++) {
+        	if (nodes.item(i).getTextContent().equals("1")) {
+        		counter++;
+        	}
+        }
+        return counter;
+    }
+    
+    
+    /**
+     * Get list of resolution type nodes
+     *  
+     * @param n city part
+     * @return list of resolution nodes
+     * @throws Exception
+     */
+    private NodeList getResolutionTypeList(int n) throws Exception {
+    	if (n == 10) {
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/typUkoncenia");
+        } else {
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/typUkoncenia");
+        }
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        return nodes;
+    }
+    
+    
+    /**
+     * Gets number of planned crimes
+     * 
+     * @param n city part
+     * @return number of planned crimes
+     * @throws Exception
+     */
+    public int getNumberOfPerpetratorsCaught(int n) throws Exception {
+        NodeList nodes = getResolutionTypeList(n);
+        int counter = 0;
+        for (int i = 0; i < nodes.getLength(); i++) {
+        	if (nodes.item(i).getTextContent().equals("1")) {
+        		counter++;
+        	}
+        }
+        return counter;
+    }
+    
+    
+    /**
+     * Gets number of cold cases
+     * 
+     * @param n city part
+     * @return number of cold cases
+     * @throws Exception
+     */
+    public int getNumberOfColdCases(int n) throws Exception {
+        NodeList nodes = getResolutionTypeList(n);
+        int counter = 0;
+        for (int i = 0; i < nodes.getLength(); i++) {
+        	if (nodes.item(i).getTextContent().equals("5")) {
+        		counter++;
+        	}
+        }
+        return counter;
+    }
+    
+    
+    /**
+     * Get population of Brno
+     *  
+     * @return population number
+     */
+    public int getBrnoPopulation() {
+       return 377549;
     }
 }
