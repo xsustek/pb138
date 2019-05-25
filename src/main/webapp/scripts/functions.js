@@ -31,6 +31,11 @@ const parseXml = xml => ({
     precin: getNodeValue(xml, "precin"),
     planned: getNodeValue(xml, "planned"),
     prepared: getNodeValue(xml, "prepared"),
+    executed: getNodeValue(xml, "executed"),
+    cold: getNodeValue(xml, "cold"),
+    average_time: getNodeValue(xml, "averageTime"),
+    average_cases: getNodeValue(xml, "averageCases"),
+    preparators: getNodeValue(xml, "preparators"),
 });
 
 const fillValues = values => {
@@ -45,7 +50,9 @@ const fillValues = values => {
     $("#crime_planned").text(values.planned);
     $("#crime_executed").text(values.executed);
     $("#crime_cold").text(values.cold);
-    $("#crime_average").text(values.average);
+    $("#crime_average_time").text(values.average_time);
+    $("#crime_average_cases").text(values.average_cases);
+    $("#crime_preparators").text(values.preparators);
 };
 
 const setMap = region => {

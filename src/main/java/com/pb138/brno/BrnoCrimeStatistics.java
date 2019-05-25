@@ -13,7 +13,8 @@ public class BrnoCrimeStatistics {
     private int planned;
     private int prepared;
     private int executed;
-    private double average;
+    private double average_time;
+    private double average_cases;
     private int cold;
     private int preparators;
     private int population;
@@ -99,12 +100,20 @@ public class BrnoCrimeStatistics {
         this.executed = executed;
     }
 
-    public double getAverage() {
-        return average;
+    public double getAverageTime() {
+        return average_time;
     }
 
-    public void setAverage(double average) {
-        this.average = average;
+    public void setAverageTime(double average) {
+        this.average_time = average;
+    }
+
+    public double getAverageCases() {
+        return average_cases;
+    }
+
+    public void setAverageCases(double average) {
+        this.average_cases = average;
     }
 
     public int getCold() {
@@ -122,7 +131,7 @@ public class BrnoCrimeStatistics {
     public void setPreparators(int preparators) {
         this.preparators = preparators;
     }
-    
+
     public int getPopulation() {
         return population;
     }

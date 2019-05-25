@@ -49,7 +49,8 @@ public class BrnoController {
             model.put("ulica", xmlParser.getCrimesCommitedOnStreet(regionInt));
             model.put("zbran", xmlParser.getCrimesWithWeaponCount(regionInt));
             model.put("nazov", xmlParser.getRegionName(regionInt));
-            model.put("priemer", xmlParser.averageTimeOfCrime(regionInt));
+            model.put("average_time", xmlParser.averageTimeOfCrime(regionInt));
+            model.put("average_cases", xmlParser.averageOfCases(regionInt));
             model.put("cold", xmlParser.getNumberOfColdCases(regionInt));
             model.put("executed", xmlParser.getNumberOfExecutedCrimes(regionInt));
             model.put("prep", xmlParser.getNumberOfPerpetratorsCaught(regionInt));
@@ -83,7 +84,8 @@ public class BrnoController {
             statistics.setZlocin(xmlParser.getNumberOfZlocin(regionInt));
             statistics.setPrecin(xmlParser.getNumberOfPrecin(regionInt));
             statistics.setPopulation(xmlParser.getCityPartPopulation(regionInt));
-            statistics.setAverage(xmlParser.averageTimeOfCrime(regionInt));
+            statistics.setAverageTime(xmlParser.averageTimeOfCrime(regionInt));
+            statistics.setAverageCases(xmlParser.averageOfCases(regionInt));
             statistics.setPreparators(xmlParser.getNumberOfPerpetratorsCaught(regionInt));
             statistics.setCold(xmlParser.getNumberOfColdCases(regionInt));
             statistics.setRegion(xmlParser.getRegionName(regionInt));

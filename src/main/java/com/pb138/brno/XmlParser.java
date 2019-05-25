@@ -50,7 +50,7 @@ public class XmlParser {
         case 9:
             return "OŽP A DOPROVODU VLAKŮ";
         case 10:
-        	return "Celé Brno";
+            return "Celé Brno";
         default: 
             throw new IllegalArgumentException();
         }
@@ -229,7 +229,7 @@ public class XmlParser {
         double averageTime = 0;
         SimpleDateFormat myFormat = new SimpleDateFormat("dd.MM.yyyy");
         for (int i = 0; i < nodesStart.getLength(); i++) {
-        	Date dateStart = myFormat.parse(nodesStart.item(i).getTextContent());
+            Date dateStart = myFormat.parse(nodesStart.item(i).getTextContent());
             Date dateEnd = myFormat.parse(nodesEnd.item(i).getTextContent());
             averageTime += (dateEnd.getTime() - dateStart.getTime());
         }
@@ -237,7 +237,15 @@ public class XmlParser {
         return (averageTime / nodesStart.getLength());
     }
 
-    
+    public double averageOfCases(int n) throws Exception {
+        double pop = getCityPartPopulation(n);
+        double cases = getCrimeCount(n);
+        
+        double result = cases / pop;
+        
+        return result*100;
+    }
+
     /**
      * Gets list of crime type nodes
      * 

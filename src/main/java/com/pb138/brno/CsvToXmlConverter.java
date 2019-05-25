@@ -33,7 +33,6 @@ public class CsvToXmlConverter {
     private final Document document;
     private final Map<Integer, String> headers = new HashMap<>();
 
-    
     /*
      * Constructor of class
      */
@@ -43,7 +42,6 @@ public class CsvToXmlConverter {
         initializeMap();
     }
 
-    
     /**
      * Initializes map for parsing csv file
      */
@@ -60,7 +58,6 @@ public class CsvToXmlConverter {
         headers.put(27, "typUkoncenia");
     }
 
-    
     /**
      * This method creates new xml document and builds it using the given csv file
      * 
@@ -70,7 +67,7 @@ public class CsvToXmlConverter {
      * @throws TransformerException
      */
     public Document getDocument(String csvPath) throws IOException, TransformerException {
-        
+
         Element yearElement = document.createElement("rok");
         yearElement.setAttribute("rok", "2016");
         document.appendChild(yearElement);
@@ -80,7 +77,7 @@ public class CsvToXmlConverter {
         yearElement.appendChild(cityElement);
         Element crimesElement = document.createElement("trestneCiny");
         cityElement.appendChild(crimesElement);
-        
+
         CSVParser csvParser = new CSVParserBuilder().withSeparator(';').build();
         try (FileReader reader = new FileReader(csvPath)) {
             try (CSVReader csvReader = new CSVReaderBuilder(new FileReader(csvPath)).withCSVParser(csvParser).build()) {
@@ -98,18 +95,16 @@ public class CsvToXmlConverter {
                     });
                     crimesElement.appendChild(crimeElement);
                 }
-
             }
-
         }
-        
+
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         Result output = new StreamResult(new File("src/main/resources/output.xml"));
         Source input = new DOMSource(document);
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
         transformer.transform(input, output);
-        
+
         return document;
     }
 }

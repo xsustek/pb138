@@ -21,7 +21,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-md-6 col-sm-12">
+                <div class="col-lg-6 col-md-12">
                     <label class="label" for="inlineFormCustomSelect">Zvolte Městkou Část</label>
                     <select class="form-control form-control-lg" id="inlineFormCustomSelect" name="region" style="width: 100%">
                         <option value="brno" selected>Celé Brno</option>
@@ -36,14 +36,14 @@
                         <option value="dpv">OŽP A Doprovodu Vlaků</option>
                     </select>
                 </div>
-                <div class="col-md-6 col-sm-12 text-center align-bottom h2" id="region">${nazov}</div>
+                <div class="col-lg-6 col-md-12 text-center align-bottom h2" id="region">${nazov}</div>
             </div>
 
             <div class="row justify-content-center" style="margin: 50px 0;">
-                <div class="col-md-6 col-sm-12">
+                <div class="col-lg-6 col-sm-12">
                     <img id="map" src="/maps/start.png" />
                 </div>
-                <div class="col-md-6 col-sm-12" id="stats">
+                <div class="col-lg-6 col-md-12" id="stats">
                     <table class="table">
                         <tbody>
                             <tr>
@@ -99,6 +99,10 @@
                                 <td id="crime_executed" class="text-right">${executed}</td>
                             </tr>
                             <tr>
+                                <td scope="row" class="text-left">Počet vyriešených prípadov:</td>
+                                <td id="crime_preparators" class="text-right">${prep}</td>
+                            </tr>
+                            <tr>
                                 <td scope="row" class="text-left">Počet odložených prípadov:</td>
                                 <td id="crime_cold" class="text-right">${cold}</td>
                             </tr>
@@ -107,8 +111,12 @@
                                 <td></td>
                             </tr>
                             <tr>
+                                <td scope="row" class="text-left">Priemerný počet trestných činov na jedného obyvateľa:</td>
+                                <td id="crime_average_cases" class="text-right">${average_cases}</td>
+                            </tr>
+                            <tr>
                                 <td scope="row" class="text-left">Priemerná doba vyriešenia prípadu:</td>
-                                <td id="crime_average" class="text-right">${average}</td>
+                                <td id="crime_average_time" class="text-right">${average_time}</td>
                             </tr>
                         </tbody>
                     </table>
