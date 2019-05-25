@@ -23,6 +23,13 @@ public class XmlParser {
     private static XPathExpression expression2;
     private Document document;
     
+    
+    /**
+     * Converts number to city part string for comparison
+     * 
+     * @param cityPart
+     * @return string city part
+     */
     private String numberToCityPart(int cityPart) {
         switch (cityPart) {
         case 1:
@@ -48,8 +55,49 @@ public class XmlParser {
         default: 
             throw new IllegalArgumentException();
         }
+    }
+    
+    
+    /**
+     * Gets population in corresponding city part
+     * 
+     * @param cityPart
+     * @return population number
+     */
+    private int getCityPartPopulation(int cityPart) {
+        switch (cityPart) {
+        case 1:
+            return 82874;
+        case 2:
+            return 26772;
+        case 3:
+            return 48161;
+        case 4:
+            return 65780;
+        case 5:
+            return 47215;
+        case 6:
+            return 22965;
+        case 7:
+            return 50207;
+        case 8:
+            return 32903;
+        case 9:
+            return 377549;
+        case 10:
+        	return 377549;
+        default: 
+            throw new IllegalArgumentException();
+        }
     }	
     
+    
+    /**
+     * Get the document to pull data from
+     * 
+     * @return document
+     * @throws Exception
+     */
     private Document getDoc() throws Exception {
         if(document != null) return document;
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -380,15 +428,5 @@ public class XmlParser {
         	}
         }
         return counter;
-    }
-    
-    
-    /**
-     * Get population of Brno
-     *  
-     * @return population number
-     */
-    public int getBrnoPopulation() {
-       return 377549;
     }
 }

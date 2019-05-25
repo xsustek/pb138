@@ -1,0 +1,43 @@
+﻿<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+elementFormDefault="qualified">
+
+<xs:element name="note">
+ <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="mesto"/>
+    </xs:sequence>
+  <xsd:attribute name="rok" use="required"/>
+  </xs:complexType>
+</xs:element>
+	
+<xsd:element name="mesto">
+	<xsd:complexType>
+		<xsd:sequence>
+				<xsd:element name="trestneCiny">
+					  <xsd:complexType>
+						 <xsd:sequence>
+							<xsd:element name="trestnyCin">
+							  <xsd:complexType>
+								 <xsd:sequence>
+									<xsd:element name="utvarPCR" type="xsd:string"/>
+									<xsd:element name="vzniknutaSkoda" type="xsd:decimal"/>
+									<xsd:element name="stadiumCinu" type="xsd:decimal"/>
+									<xsd:element name= "druhCinu" type="xsd:decimal"/>
+									<xsd:element name="klasifikaceCinu" type="xsd:decimal"/>															
+									<xsd:element name="spachanNaUlici" type="xsd:decimal"/>
+									<xsd:element name="pouzitaZbran" type="xsd:decimal"/>
+									<xsd:element name="datumVykonania" type="xsd:date"/>
+									<xsd:element name="datumUkoncenia" type="xsd:date"/>
+									<xsd:element name="typUkoncenia" type="xsd:decimal"/>
+								</xsd:sequence>
+							  </xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>			
+					</xsd:complexType>
+				</xsd:element>									
+		</xsd:sequence>
+		<xsd:attribute name="nazev" use="required"/>		
+		<xsd:attribute name="obyvatele" use="required"/>			
+	</xsd:complexType>
+</xsd:element>			
+</xsd:schema>
