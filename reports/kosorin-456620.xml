@@ -1,0 +1,59 @@
+<article xmlns='http://docbook.org/ns/docbook'>
+  <info>
+    <title>Projekt Brno</title>
+    <author>
+      <personname>
+        <firstname>Kristián</firstname>
+        <surname>Kosorín</surname>
+      </personname>
+      <email>456620@fi.muni.cz</email>
+    </author>
+    <pubdate>2019</pubdate>
+  </info>
+
+  <section>
+    <title>1. Úvod</title>
+    <para>
+      Cieľom nášho projeku bolo vizualizovať dáta získané z <ulink url="https://data.brno.cz/data/">https://data.brno.cz/data/</ulink>. 
+      Zamerali sme sa na dáta týkajúce sa kriminality v jednotlivých mestkých častiach. Vytvorili sme jednoduchú a zároveň prehľadnú 
+      webovú aplikáciu ktorá zobrazuje štatistiky z jednotlivých mestkých častí
+    </para>
+  </section>
+
+  <section>
+    <title>2. Riešenie</title>
+    <section>
+      <title>2.1. Využité technológie</title>
+      <itemizedlist mark='bullet'>
+        <listitem>
+          <para>
+            <emphasis role="strong">Bootstrap 4.3.1</emphasis>
+            Populárny webový framework, využívajúci technológie HTML, CSS, JavaScript, pre jednoduchý vývoj responzívnych webových aplikácií.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="strong">jQuery 3.3.1</emphasis>
+            Populárna JavaScript-ová knižnica, určená na zjednodušenie práce s JavaScript-om.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="strong">JSP</emphasis>
+            Technológia JavaServer Pages umožňuje vytvárať dynamické HTML stránky pre Java web aplikácie.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+        <section>
+      <title>2.2. Vývoj</title>
+        <para>
+          Mojou úlohou na tomto projekte bolo, primárne, vytvorenie frontendu webovej aplikácie. Po konzultácii s kolegami z tímu sme zvolili zobrazenie
+          do dvoch stĺpcov pre jednoduché a intuitívne zobrazenie informácií. Samotná stránka je vytvorená v značkovacom jazyku HTML5 a naštýlovaná pomocou CSS
+          využitím spomínaného frameworku Bootstrap. Vďaka tomuto frameworku je stránka responzívna, takže sa zobrazí správne na väčšine zariadení. V ľavom stĺpci
+          je zobrazená mapa Brna s vyznačenou časťou, pre ktorú sa zobrazujú štatistiky. V pravom stĺpci sú zobrazené samotné štatistiky mierne oddelených do 
+          logických častí. Jazyk JavaScript a knižnicu jQuery využívame na dynamickú zmenu zobrazených informácií a máp bez nutnosti znovu-načítania stránky.
+        </para>
+    </section>
+  </section>
+</article>
