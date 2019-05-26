@@ -90,6 +90,7 @@ public class BrnoController {
             statistics.setAverageCases(xmlParser.averageOfCases(regionInt));
             statistics.setPreparators(xmlParser.getNumberOfPerpetratorsCaught(regionInt));
             statistics.setCold(xmlParser.getNumberOfColdCases(regionInt));
+            statistics.setExecuted(xmlParser.getNumberOfExecutedCrimes(regionInt));
             statistics.setRegion(xmlParser.getRegionName(regionInt));
         } catch (Exception e) {
             System.out.println(e);
