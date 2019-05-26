@@ -232,12 +232,7 @@ public class XmlParser {
         double cases = getCrimeCount(n);
         
         double result = cases / pop;
-<<<<<<< HEAD
-        return result;
-=======
-        
         return Double.parseDouble(Double.toString(result).substring(0, 6));
->>>>>>> f16d7eff1cea6823dcdc3ff422dfe90daa544e0b
     }
 
     /**
