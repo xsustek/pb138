@@ -1,0 +1,38 @@
+<article xmlns='http://docbook.org/ns/docbook'>
+  <info>
+    <title>Projekt Brno</title>
+    <author>
+      <personname>
+        <firstname>Matìj</firstname>
+        <surname>Kavka</surname>
+      </personname>
+      <email>433677@mail.muni.cz</email>
+    </author>
+    <pubdate>2019</pubdate>
+  </info>
+
+  <section>
+    <title>Úvod</title>
+    <para>
+Úkol našeho projektu bylo vybrat si alespoò dvì datové sady z https://data.brno.cz/data/ a vhodným zpùsobem je propojit a vizualizovat. Po prostudování datových sad ze zmínìného zdroje jsme se jednohlasnì shodli na datových saadách zabývající se kriminalitou, kterou jsme se rozhodli spojit s daty ohlednì obydlenosti jednotlivých mìstských oblastí. Cílem tak bylo poukázat na rozdíly nejen napøíè mìstskými oblastmi a spáchanými zloèiny s ohledem na jejich velikost, ale i na rozdílnost jednotlivých OOP na území Brna. Vzhledem k naplnìní max. kapacity našeho týmu a zohlednìní programovacích schopností všech èlenu jsem se chytil role vedoucího týmu, který by mìl øešit obsah,strukturu projektu a svým kolegùm jsem pøenechal programovací èásti.
+    </para>
+  </section>
+
+  <section>
+    <title>Øešení</title>
+       <para>
+	První èástí bylo prozkoumat veškeré dostupné zdroje. Po prozkoumání zdrojù, které jsme si vybrali bylo jasné, že náš hlavní zdroj budou data s kriminalitou.
+Osobnì jsem dohledal data s poètem obyvatel v jednotlivých oblastech Brna a upravil je tak, aby je bylo možné použít v našem projektu. Po vytvoøení XML jsem zpracoval XSD k tomotu modelu. Nepøíjemné zjištìní pøišlo ve chvíli, kdy jsem zjistil, že mìstké oblasti nesedí 1:1 na oblasti vy kterých se øeší kriminalita na území Brna.
+Bylo proto nutné zjistit které mìstské oblasti spadají pod která OOP a upravit i data s obyvateli, aby sedìla na jednotlivé OOP. Tohoto problému jsem si naštìsti všiml pøed situací, kdy by tento stavzpùsobil problémy. Následnou rychlou úpravou dat a její struktury jsme problém nemuseli øešit náš projekt mìl plynulý prùbìhl.
+Dalším problémem bylo nalezení vhodné mapy pro grafickou vizualizaci. To bohužel není nikde k dostání. Proto jsem použil standartní mapu mìstských oblastí a upravil ji podle potøeb nám vychovujících. Po vìtšinì potøebných programovacích pracích, které vykonali mí kolegové jsem vytvoøil koncept, která a jak bychom data je mìli zobrazovat. 
+Posledním mým úkolem pak bylo vytvoøit prezentaci pro obhajobu a mít na starost wiki u našeho projektu u githubu.
+       </para>
+  </section>
+
+   <section>
+    <title>Závìr</title>
+    <para>
+      I pøesto, že jsme zaèali relativnì pozdì jsme práci stihli dokonèit vèas. Trofám si øíct, že každý z èlenù svou èást práce nepodcenil a svìdomitì a pøedevším vèas dokonèil. Práce tak na sebe svižnì navazovala a my práci dokonèili velmi rychle. Vzhledem  k tomu, že studuji primárnì na ekonomické fakultì ESF, tak si myslím, že mùj výbìr pozice a práce, kterou jsem zastával byl logický krok. Byla to moje první práce na GITHUB a musím øíct, že to považuji za velmi užiteènou zkušenost, kterou v budoucnu urèitì využiji.
+    </para>
+  </section>
+</article>
