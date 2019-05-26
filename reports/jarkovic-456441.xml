@@ -1,0 +1,57 @@
+<article xmlns='http://docbook.org/ns/docbook'>
+  <info>
+    <title>Projekt Brno</title>
+    <author>
+      <personname>
+        <firstname>Matúš</firstname>
+        <surname>Jarkovič</surname>
+      </personname>
+      <email>456441@fi.muni.cz</email>
+    </author>
+    <pubdate>2019</pubdate>
+  </info>
+
+  <section>
+    <title>1. Úvod</title>
+    <para>
+      Cieľom nášho projeku bolo vizualizovať dáta získané z <ulink url="https://data.brno.cz/data/">https://data.brno.cz/data/</ulink>. 
+      Zamerali sme sa na dáta týkajúce sa kriminality v jednotlivých mestkých častiach. Vytvorili sme jednoduchú a zároveň prehľadnú 
+      webovú aplikáciu ktorá zobrazuje štatistiky z jednotlivých mestkých častí
+    </para>
+  </section>
+
+  <section>
+    <title>2. Riešenie</title>
+    <section>
+      <title>2.1. Využité technológie</title>
+      <itemizedlist mark='bullet'>
+        <listitem>
+          <para>
+            <emphasis role="strong">XPath</emphasis>
+            Použitý na vyťahovanie a filtrovanie dát z xml súborov.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="strong">XML DOM</emphasis>
+            Uľahčenie práce so súbormi, pomocou NodeList, Element.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis role="strong">DocumentBuilder</emphasis>
+            Java trieda, pomocou ktorej bol vybudovaný xml súbor.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+        <section>
+      <title>2.2. Vývoj</title>
+        <para>
+          Mojou úlohou v tomto projekte bolo vytvoriť triedu, ktorá pomocou xpath dotazov vyťahovala dáta z xml súboru a vracala ich v použiteľnej podobe.
+		  Taktiež som sa podielal na dokončení a optimalizácii triedy, ktorá z pripraveného csv súboru pomocou DocumentBuilderu vytvorila k nemu odpovedajúci xml súbor.
+		  Všetky metódy v týchto triedach boli následne zdokumentované pomocou Javadoc.
+        </para>
+    </section>
+  </section>
+</article>
