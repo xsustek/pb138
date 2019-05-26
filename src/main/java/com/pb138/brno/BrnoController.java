@@ -14,20 +14,22 @@ import javax.servlet.http.HttpServletRequest;
 public class BrnoController {
     private CsvToXmlConverter csvToXmlConverter;
     private XmlParser xmlParser;
+    private CityPartConverter cityPartConverter;
 
     /**
      * Controller init function
-
+     *
      * @param csvToXmlConverter
      * @param xmlParser
      */
-    public BrnoController(CsvToXmlConverter csvToXmlConverter, XmlParser xmlParser) {
+    public BrnoController(CsvToXmlConverter csvToXmlConverter, XmlParser xmlParser, CityPartConverter cityPartConverter) {
         this.xmlParser = xmlParser;
+        this.cityPartConverter = cityPartConverter;
 
         /* Generating of XML file */
         this.csvToXmlConverter = csvToXmlConverter;
         try {
-            this.csvToXmlConverter.getDocument("src/main/resources/brno_2016.csv");
+            this.csvToXmlConverter.convert("src/main/resources/brno_2016.csv");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -41,7 +43,7 @@ public class BrnoController {
             region = "brno";
         }
 
-        Integer regionInt = regionToInt(region);
+        Integer regionInt = cityPartConverter.regionToInt(region);
 
         try {
             model.put("celkom", xmlParser.getCrimeCount(regionInt));
@@ -72,7 +74,7 @@ public class BrnoController {
             region = "brno";
         }
 
-        int regionInt = regionToInt(region);
+        int regionInt = cityPartConverter.regionToInt(region);
         BrnoCrimeStatistics statistics = new BrnoCrimeStatistics();
         try {
             statistics.setCount(xmlParser.getCrimeCount(regionInt));
@@ -94,32 +96,5 @@ public class BrnoController {
         }
 
         return statistics;
-    }
-
-    private int regionToInt(String region) {
-        switch (region) {
-            case "brno":
-                return 10;
-            case "str":
-                return 1;
-            case "zbv":
-                return 2;
-            case "svr":
-                return 3;
-            case "zid":
-                return 4;
-            case "krp":
-                return 5;
-            case "kom":
-                return 6;
-            case "vys":
-                return 7;
-            case "bys":
-                return 8;
-            case "dpv":
-                return 9;
-            default:
-                throw new IllegalArgumentException();
-        }
     }
 }

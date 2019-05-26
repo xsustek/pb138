@@ -4,23 +4,22 @@ import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import org.apache.commons.collections4.map.MultiValueMap;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,15 +29,16 @@ import java.util.Map;
 @Service
 public class CsvToXmlConverter {
     private final DocumentBuilder documentBuilder;
-    private final Document document;
     private final Map<Integer, String> headers = new HashMap<>();
+    private CityPartConverter cityPartConverter;
 
     /*
      * Constructor of class
      */
-    public CsvToXmlConverter() throws ParserConfigurationException {
+    public CsvToXmlConverter(CityPartConverter cityPartConverter) throws ParserConfigurationException {
+        this.cityPartConverter = cityPartConverter;
+
         documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        document = documentBuilder.newDocument();
         initializeMap();
     }
 
@@ -59,15 +59,54 @@ public class CsvToXmlConverter {
     }
 
     /**
-     * This method creates new xml document and builds it using the given csv file
-     * 
+     * This method creates new xml documents and builds it using the given csv file
+     *
      * @param csvPath path to csv file
-     * @return created xml document
      * @throws IOException
      * @throws TransformerException
      */
-    public Document getDocument(String csvPath) throws IOException, TransformerException {
+    public void convert(String csvPath) throws IOException, TransformerException {
+        Map<Integer, Document> docs = groupDocumentByCityPart(csvPath);
+        for (Map.Entry<Integer, Document> entry : docs.entrySet()) {
+            Document doc = entry.getValue();
+            int index = entry.getKey();
 
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            File dir = new File("src/main/resources/xmls");
+            dir.mkdirs();
+            Result output = new StreamResult(new File("src/main/resources/xmls/" + index + ".xml"));
+            Source input = new DOMSource(doc);
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            transformer.transform(input, output);
+        }
+    }
+
+    private Map<Integer, Document> groupDocumentByCityPart(String csvPath) throws IOException {
+        Map<Integer, Document> result = new HashMap<>();
+
+        MultiValueMap<Integer, Map<String, String>> cityPathMap = getMap(csvPath);
+        for (int i : cityPathMap.keySet()) {
+            Collection<Map<String, String>> elements = cityPathMap.getCollection(i);
+
+            Document document = getDocument(elements);
+            result.put(i, document);
+        }
+        Collection<Map<String, String>> allElements = new ArrayList<>();
+        for (int i : cityPathMap.keySet()) {
+            Collection<Map<String, String>> elements = cityPathMap.getCollection(i);
+
+            allElements.addAll(elements);
+        }
+        Document document = getDocument(allElements);
+        result.put(10, document);
+
+
+        return result;
+    }
+
+    private Document getDocument(Collection<Map<String, String>> elements) {
+        Document document = documentBuilder.newDocument();
         Element yearElement = document.createElement("rok");
         yearElement.setAttribute("rok", "2016");
         document.appendChild(yearElement);
@@ -77,34 +116,34 @@ public class CsvToXmlConverter {
         yearElement.appendChild(cityElement);
         Element crimesElement = document.createElement("trestneCiny");
         cityElement.appendChild(crimesElement);
+        elements.forEach(element -> {
+            Element crimeElement = document.createElement("trestnyCin");
+            element.forEach((key, value) -> {
+                Element el = document.createElement(key);
+                el.setTextContent(value);
+                crimeElement.appendChild(el);
+            });
+            crimesElement.appendChild(crimeElement);
+        });
+        return document;
+    }
 
+    private MultiValueMap<Integer, Map<String, String>> getMap(String csvPath) throws IOException {
+        MultiValueMap<Integer, Map<String, String>> result = new MultiValueMap<>();
         CSVParser csvParser = new CSVParserBuilder().withSeparator(';').build();
-        try (FileReader reader = new FileReader(csvPath)) {
-            try (CSVReader csvReader = new CSVReaderBuilder(new FileReader(csvPath)).withCSVParser(csvParser).build()) {
-                boolean isFirst = true;
-                for (String[] line : csvReader) {
-                    if (isFirst) {
-                        isFirst = false;
-                        continue;
-                    }
-                    Element crimeElement = document.createElement("trestnyCin");
-                    headers.forEach((index, header) -> {
-                        Element el = document.createElement(header);
-                        el.setTextContent(line[index]);
-                        crimeElement.appendChild(el);
-                    });
-                    crimesElement.appendChild(crimeElement);
+        try (CSVReader csvReader = new CSVReaderBuilder(new FileReader(csvPath)).withCSVParser(csvParser).build()) {
+            boolean isFirst = true;
+            for (String[] line : csvReader) {
+                if (isFirst) {
+                    isFirst = false;
+                    continue;
                 }
+                Map<String, String> crimes = new HashMap<>();
+                headers.forEach((index, header) -> crimes.put(header, line[index]));
+                result.put(cityPartConverter.cityPartToNumber(line[1]), crimes);
             }
         }
 
-        Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        Result output = new StreamResult(new File("src/main/resources/output.xml"));
-        Source input = new DOMSource(document);
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-        transformer.transform(input, output);
-
-        return document;
+        return result;
     }
 }

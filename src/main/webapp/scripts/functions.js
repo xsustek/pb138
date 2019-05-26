@@ -36,6 +36,7 @@ const parseXml = xml => ({
     average_time: getNodeValue(xml, "averageTime"),
     average_cases: getNodeValue(xml, "averageCases"),
     preparators: getNodeValue(xml, "preparators"),
+    population: getNodeValue(xml, "population")
 });
 
 const fillValues = values => {
@@ -53,6 +54,7 @@ const fillValues = values => {
     $("#crime_average_time").text(values.average_time);
     $("#crime_average_cases").text(values.average_cases);
     $("#crime_preparators").text(values.preparators);
+    $("#population").text(values.population);
 };
 
 const setMap = region => {

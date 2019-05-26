@@ -2,12 +2,15 @@ package com.pb138.brno;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
+
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -16,93 +19,66 @@ import org.w3c.dom.NodeList;
  * Class for parsing XML file
  */
 @Service
-public class XmlParser {	
+public class XmlParser {
     private static XPathFactory factory = XPathFactory.newInstance();
     private static XPath path = factory.newXPath();
     private static XPathExpression expression1;
     private static XPathExpression expression2;
-    private Document document;
+    private Map<Integer, Document> documents = new HashMap<>();
+    private CityPartConverter cityPartConverter;
+
+    public XmlParser(CityPartConverter cityPartConverter) {
+        this.cityPartConverter = cityPartConverter;
+    }
 
     /**
-     * Converts number to city part string for comparison
-     * 
-     * @param cityPart
-     * @return string city part
-     */
-    private String numberToCityPart(int cityPart) {
-        switch (cityPart) {
-        case 1:
-            return "OOP BRNO - STŘED";
-        case 2:
-            return "OOP BRNO - ŽABOVŘESKY";
-        case 3:
-            return "OOP BRNO - SEVER";
-        case 4:
-            return "OOP BRNO - ŽIDENICE";
-        case 5:
-            return "OOP BRNO - KRÁLOVO POLE";
-        case 6:
-            return "OOP BRNO - KOMÁROV";
-        case 7:
-            return "OOP BRNO - VÝSTAVIŠTĚ";
-        case 8:
-            return "OOP BRNO - BYSTRC";
-        case 9:
-            return "OŽP A DOPROVODU VLAKŮ";
-        case 10:
-            return "Celé Brno";
-        default: 
-            throw new IllegalArgumentException();
-        }
-    }
-    
-    
-    /**
      * Gets population in corresponding city part
-     * 
+     *
      * @param cityPart
      * @return population number
      */
     public int getCityPartPopulation(int cityPart) {
         switch (cityPart) {
-        case 1:
-            return 82874;
-        case 2:
-            return 26772;
-        case 3:
-            return 48161;
-        case 4:
-            return 65780;
-        case 5:
-            return 47215;
-        case 6:
-            return 22965;
-        case 7:
-            return 50207;
-        case 8:
-            return 32903;
-        case 9:
-            return 377549;
-        case 10:
-            return 377549;
-        default: 
-            throw new IllegalArgumentException();
+            case 1:
+                return 82874;
+            case 2:
+                return 26772;
+            case 3:
+                return 48161;
+            case 4:
+                return 65780;
+            case 5:
+                return 47215;
+            case 6:
+                return 22965;
+            case 7:
+                return 50207;
+            case 8:
+                return 32903;
+            case 9:
+                return 377549;
+            case 10:
+                return 377549;
+            default:
+                throw new IllegalArgumentException();
         }
-    }	
-    
-    
+    }
+
+
     /**
      * Get the document to pull data from
-     * 
+     *
      * @return document
      * @throws Exception
      */
-    private Document getDoc() throws Exception {
-        if(document != null) return document;
+    private Document getDoc(int n) throws Exception {
+        if (documents.containsKey(n)) return documents.get(n);
+
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
-        document = db.parse("src/main/resources/output.xml");
-        return document;
+        Document doc = db.parse("src/main/resources/xmls/" + n + ".xml");
+        documents.put(n, doc);
+        return doc;
     }
 
     /**
@@ -113,7 +89,7 @@ public class XmlParser {
      * @throws IllegalArgumentException
      */
     public String getRegionName(int n) throws IllegalArgumentException {
-        return numberToCityPart(n);
+        return cityPartConverter.numberToCityPart(n);
     }
 
     /**
@@ -127,9 +103,9 @@ public class XmlParser {
         if (n == 10) {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin");
         } else {
-            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + cityPartConverter.numberToCityPart(n) + "']");
         }
-        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(n), javax.xml.xpath.XPathConstants.NODESET);
         return nodes.getLength();
     }
 
@@ -144,9 +120,9 @@ public class XmlParser {
         if (n == 10) {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/pouzitaZbran");
         } else {
-            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/pouzitaZbran");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + cityPartConverter.numberToCityPart(n) + "']/pouzitaZbran");
         }
-        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(n), javax.xml.xpath.XPathConstants.NODESET);
 
         int counter = 0;
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -169,10 +145,10 @@ public class XmlParser {
         if (n == 10) {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/spachanNaUlici");
         } else {
-            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/spachanNaUlici");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + cityPartConverter.numberToCityPart(n) + "']/spachanNaUlici");
         }
 
-        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(n), javax.xml.xpath.XPathConstants.NODESET);
 
         int counter = 0;
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -195,9 +171,9 @@ public class XmlParser {
         if (n == 10) {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/vzniknutaSkoda");
         } else {
-            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/vzniknutaSkoda");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + cityPartConverter.numberToCityPart(n) + "']/vzniknutaSkoda");
         }
-        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(n), javax.xml.xpath.XPathConstants.NODESET);
 
         int damage = 0;
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -206,13 +182,13 @@ public class XmlParser {
 
         return damage;
     }
-    
-    
+
+
     /**
      * This method calculates average time of crime resolution in given region
-     * 
+     *
      * @param n number corresponding to region
-     * @return average time 
+     * @return average time
      * @throws Exception
      */
     public double averageTimeOfCrime(int n) throws Exception {
@@ -220,11 +196,11 @@ public class XmlParser {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumVykonania");
             expression2 = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumUkoncenia");
         } else {
-            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/datumVykonania");
-            expression2 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/datumUkoncenia");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + cityPartConverter.numberToCityPart(n) + "']/datumVykonania");
+            expression2 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + cityPartConverter.numberToCityPart(n) + "']/datumUkoncenia");
         }
-        NodeList nodesStart = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
-        NodeList nodesEnd = (NodeList) expression2.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodesStart = (NodeList) expression1.evaluate(getDoc(n), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodesEnd = (NodeList) expression2.evaluate(getDoc(n), javax.xml.xpath.XPathConstants.NODESET);
 
         double averageTime = 0;
         SimpleDateFormat myFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -240,15 +216,15 @@ public class XmlParser {
     public double averageOfCases(int n) throws Exception {
         double pop = getCityPartPopulation(n);
         double cases = getCrimeCount(n);
-        
+
         double result = cases / pop;
-        
-        return result*100;
+
+        return result * 100;
     }
 
     /**
      * Gets list of crime type nodes
-     * 
+     *
      * @param n city part
      * @return list of nodes
      * @throws Exception
@@ -257,16 +233,16 @@ public class XmlParser {
         if (n == 10) {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/druhCinu");
         } else {
-            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/druhCinu");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + cityPartConverter.numberToCityPart(n) + "']/druhCinu");
         }
-        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(n), javax.xml.xpath.XPathConstants.NODESET);
         return nodes;
     }
-    
-    
+
+
     /**
      * Gets number of precin from xml file
-     * 
+     *
      * @param n city part
      * @return number of precin
      * @throws Exception
@@ -302,7 +278,7 @@ public class XmlParser {
 
     /**
      * Get list of stage nodes
-     *  
+     *
      * @param n city part
      * @return list of stage nodes
      * @throws Exception
@@ -311,15 +287,15 @@ public class XmlParser {
         if (n == 10) {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/stadiumCinu");
         } else {
-            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/stadiumCinu");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + cityPartConverter.numberToCityPart(n) + "']/stadiumCinu");
         }
-        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(n), javax.xml.xpath.XPathConstants.NODESET);
         return nodes;
     }
 
     /**
      * Gets number of executed crimes
-     * 
+     *
      * @param n city part
      * @return number of executed crimes
      * @throws Exception
@@ -338,7 +314,7 @@ public class XmlParser {
 
     /**
      * Gets number of prepared crimes
-     * 
+     *
      * @param n city part
      * @return number of prepared crimes
      * @throws Exception
@@ -357,7 +333,7 @@ public class XmlParser {
 
     /**
      * Gets number of planned crimes
-     * 
+     *
      * @param n city part
      * @return number of planned crimes
      * @throws Exception
@@ -376,7 +352,7 @@ public class XmlParser {
 
     /**
      * Get list of resolution type nodes
-     *  
+     *
      * @param n city part
      * @return list of resolution nodes
      * @throws Exception
@@ -385,15 +361,15 @@ public class XmlParser {
         if (n == 10) {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/typUkoncenia");
         } else {
-            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + numberToCityPart(n) + "']/typUkoncenia");
+            expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin[utvarPCR ='" + cityPartConverter.numberToCityPart(n) + "']/typUkoncenia");
         }
-        NodeList nodes = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
+        NodeList nodes = (NodeList) expression1.evaluate(getDoc(n), javax.xml.xpath.XPathConstants.NODESET);
         return nodes;
     }
 
     /**
      * Gets number of planned crimes
-     * 
+     *
      * @param n city part
      * @return number of planned crimes
      * @throws Exception
@@ -411,7 +387,7 @@ public class XmlParser {
 
     /**
      * Gets number of cold cases
-     * 
+     *
      * @param n city part
      * @return number of cold cases
      * @throws Exception
