@@ -2,6 +2,7 @@ package com.pb138.brno;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,10 +18,10 @@ import org.w3c.dom.NodeList;
  */
 @Service
 public class XmlParser {	
-    private static XPathFactory factory = XPathFactory.newInstance();
-    private static XPath path = factory.newXPath();
-    private static XPathExpression expression1;
-    private static XPathExpression expression2;
+    private XPathFactory factory = XPathFactory.newInstance();
+    private XPath path = factory.newXPath();
+    private XPathExpression expression1;
+    private XPathExpression expression2;
     private Document document;
 
     /**
@@ -215,7 +216,7 @@ public class XmlParser {
      * @return average time 
      * @throws Exception
      */
-    public double averageTimeOfCrime(int n) throws Exception {
+    public int averageTimeOfCrime(int n) throws Exception {
         if (n == 10) {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumVykonania");
             expression2 = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumUkoncenia");
@@ -226,17 +227,29 @@ public class XmlParser {
         NodeList nodesStart = (NodeList) expression1.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
         NodeList nodesEnd = (NodeList) expression2.evaluate(getDoc(), javax.xml.xpath.XPathConstants.NODESET);
 
-        double averageTime = 0;
+        int averageTime = 0;
         SimpleDateFormat myFormat = new SimpleDateFormat("dd.MM.yyyy");
         for (int i = 0; i < nodesStart.getLength(); i++) {
             Date dateStart = myFormat.parse(nodesStart.item(i).getTextContent());
             Date dateEnd = myFormat.parse(nodesEnd.item(i).getTextContent());
-            averageTime += (dateEnd.getTime() - dateStart.getTime());
+            long diff = dateEnd.getTime() - dateStart.getTime();
+            if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 2000 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 0) {
+            	continue;
+            }
+            averageTime += TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         }
 
         return (averageTime / nodesStart.getLength());
     }
 
+    
+    /**
+     * Get get cases / population
+     * 
+     * @param n city part
+     * @return number
+     * @throws Exception
+     */
     public double averageOfCases(int n) throws Exception {
         double pop = getCityPartPopulation(n);
         double cases = getCrimeCount(n);
@@ -374,6 +387,7 @@ public class XmlParser {
         return counter;
     }
 
+    
     /**
      * Get list of resolution type nodes
      *  
