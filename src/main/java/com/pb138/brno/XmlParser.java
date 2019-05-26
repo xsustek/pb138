@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,54 +21,55 @@ import org.w3c.dom.NodeList;
  */
 @Service
 public class XmlParser {
-    private static XPathFactory factory = XPathFactory.newInstance();
-    private static XPath path = factory.newXPath();
-    private static XPathExpression expression1;
-    private static XPathExpression expression2;
+    private XPathFactory factory = XPathFactory.newInstance();
+    private XPath path = factory.newXPath();
+    private XPathExpression expression1;
+    private XPathExpression expression2;
     private Map<Integer, Document> documents = new HashMap<>();
     private CityPartConverter cityPartConverter;
 
     public XmlParser(CityPartConverter cityPartConverter) {
         this.cityPartConverter = cityPartConverter;
     }
-
+    
+    
     /**
      * Gets population in corresponding city part
-     *
+     * 
      * @param cityPart
      * @return population number
      */
     public int getCityPartPopulation(int cityPart) {
         switch (cityPart) {
-            case 1:
-                return 82874;
-            case 2:
-                return 26772;
-            case 3:
-                return 48161;
-            case 4:
-                return 65780;
-            case 5:
-                return 47215;
-            case 6:
-                return 22965;
-            case 7:
-                return 50207;
-            case 8:
-                return 32903;
-            case 9:
-                return 377549;
-            case 10:
-                return 377549;
-            default:
-                throw new IllegalArgumentException();
+        case 1:
+            return 82874;
+        case 2:
+            return 26772;
+        case 3:
+            return 48161;
+        case 4:
+            return 65780;
+        case 5:
+            return 47215;
+        case 6:
+            return 22965;
+        case 7:
+            return 50207;
+        case 8:
+            return 32903;
+        case 9:
+            return 377549;
+        case 10:
+            return 377549;
+        default: 
+            throw new IllegalArgumentException();
         }
-    }
-
-
+    }	
+    
+    
     /**
      * Get the document to pull data from
-     *
+     * 
      * @return document
      * @throws Exception
      */
@@ -182,16 +184,16 @@ public class XmlParser {
 
         return damage;
     }
-
-
+    
+    
     /**
      * This method calculates average time of crime resolution in given region
-     *
+     * 
      * @param n number corresponding to region
-     * @return average time
+     * @return average time 
      * @throws Exception
      */
-    public double averageTimeOfCrime(int n) throws Exception {
+    public int averageTimeOfCrime(int n) throws Exception {
         if (n == 10) {
             expression1 = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumVykonania");
             expression2 = path.compile("/rok/mesto/trestneCiny/trestnyCin/datumUkoncenia");
@@ -202,29 +204,41 @@ public class XmlParser {
         NodeList nodesStart = (NodeList) expression1.evaluate(getDoc(n), javax.xml.xpath.XPathConstants.NODESET);
         NodeList nodesEnd = (NodeList) expression2.evaluate(getDoc(n), javax.xml.xpath.XPathConstants.NODESET);
 
-        double averageTime = 0;
+        int averageTime = 0;
         SimpleDateFormat myFormat = new SimpleDateFormat("dd.MM.yyyy");
         for (int i = 0; i < nodesStart.getLength(); i++) {
             Date dateStart = myFormat.parse(nodesStart.item(i).getTextContent());
             Date dateEnd = myFormat.parse(nodesEnd.item(i).getTextContent());
-            averageTime += (dateEnd.getTime() - dateStart.getTime());
+            long diff = dateEnd.getTime() - dateStart.getTime();
+            if (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 2000 || TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 0) {
+            	continue;
+            }
+            averageTime += TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         }
 
         return (averageTime / nodesStart.getLength());
     }
 
+
+    /**
+     * Get get cases / population
+     *
+     * @param n city part
+     * @return number
+     * @throws Exception
+     */
     public double averageOfCases(int n) throws Exception {
         double pop = getCityPartPopulation(n);
         double cases = getCrimeCount(n);
-
+        
         double result = cases / pop;
-
-        return result * 100;
+        
+        return result*100;
     }
 
     /**
      * Gets list of crime type nodes
-     *
+     * 
      * @param n city part
      * @return list of nodes
      * @throws Exception
@@ -238,11 +252,11 @@ public class XmlParser {
         NodeList nodes = (NodeList) expression1.evaluate(getDoc(n), javax.xml.xpath.XPathConstants.NODESET);
         return nodes;
     }
-
-
+    
+    
     /**
      * Gets number of precin from xml file
-     *
+     * 
      * @param n city part
      * @return number of precin
      * @throws Exception
@@ -278,7 +292,7 @@ public class XmlParser {
 
     /**
      * Get list of stage nodes
-     *
+     *  
      * @param n city part
      * @return list of stage nodes
      * @throws Exception
@@ -295,7 +309,7 @@ public class XmlParser {
 
     /**
      * Gets number of executed crimes
-     *
+     * 
      * @param n city part
      * @return number of executed crimes
      * @throws Exception
@@ -314,7 +328,7 @@ public class XmlParser {
 
     /**
      * Gets number of prepared crimes
-     *
+     * 
      * @param n city part
      * @return number of prepared crimes
      * @throws Exception
@@ -333,7 +347,7 @@ public class XmlParser {
 
     /**
      * Gets number of planned crimes
-     *
+     * 
      * @param n city part
      * @return number of planned crimes
      * @throws Exception
@@ -352,7 +366,7 @@ public class XmlParser {
 
     /**
      * Get list of resolution type nodes
-     *
+     *  
      * @param n city part
      * @return list of resolution nodes
      * @throws Exception
@@ -369,7 +383,7 @@ public class XmlParser {
 
     /**
      * Gets number of planned crimes
-     *
+     * 
      * @param n city part
      * @return number of planned crimes
      * @throws Exception
@@ -387,7 +401,7 @@ public class XmlParser {
 
     /**
      * Gets number of cold cases
-     *
+     * 
      * @param n city part
      * @return number of cold cases
      * @throws Exception

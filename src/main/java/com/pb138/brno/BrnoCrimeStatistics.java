@@ -13,7 +13,7 @@ public class BrnoCrimeStatistics {
     private int planned;
     private int prepared;
     private int executed;
-    private double average_time;
+    private int average_time;
     private double average_cases;
     private int cold;
     private int preparators;
@@ -100,11 +100,11 @@ public class BrnoCrimeStatistics {
         this.executed = executed;
     }
 
-    public double getAverageTime() {
+    public int getAverageTime() {
         return average_time;
     }
 
-    public void setAverageTime(double average) {
+    public void setAverageTime(int average) {
         this.average_time = average;
     }
 
