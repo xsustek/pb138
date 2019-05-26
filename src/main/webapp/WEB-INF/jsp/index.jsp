@@ -116,7 +116,7 @@
                             </tr>
                             <tr>
                                 <td scope="row" class="text-left">Priemerná doba vyriešenia prípadu:</td>
-                                <td id="crime_average_time" class="text-right">${average_time}</td>
+                                <td id="crime_average_time" class="text-right">${average_time} dní</td>
                             </tr>
                         </tbody>
                     </table>

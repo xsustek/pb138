@@ -50,7 +50,7 @@ const fillValues = values => {
     $("#crime_planned").text(values.planned);
     $("#crime_executed").text(values.executed);
     $("#crime_cold").text(values.cold);
-    $("#crime_average_time").text(values.average_time);
+    $("#crime_average_time").text(values.average_time + " dní");
     $("#crime_average_cases").text(values.average_cases);
     $("#crime_preparators").text(values.preparators);
 };
@@ -82,9 +82,11 @@ const formatNumber = value => {
 $(document).ready(function () {
     let region = getUrlParameter('region');
     let number = $("#crime_damage").val();
+    let number2 = $("#crime_average_time").val();
     setMap(region);
     setSelect(region);
-    $("#crime_damage").text(formatNumber(number) + " Kč");
+    //$("#crime_damage").text(formatNumber(number) + " Kč");
+    //$("#crime_average_time").text(number2 + " dní");
     $("#inlineFormCustomSelect").change(e => {
         let region = $("#inlineFormCustomSelect").val();
         fetch(`/api/crimes/${region}`)
