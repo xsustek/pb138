@@ -232,8 +232,7 @@ public class XmlParser {
         double cases = getCrimeCount(n);
         
         double result = cases / pop;
-        
-        return result*100;
+        return result;
     }
 
     /**
