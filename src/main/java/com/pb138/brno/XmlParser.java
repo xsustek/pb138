@@ -233,7 +233,7 @@ public class XmlParser {
         
         double result = cases / pop;
         
-        return result*100;
+        return Double.parseDouble(Double.toString(result).substring(0, 6));
     }
 
     /**
