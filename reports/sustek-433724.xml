@@ -17,13 +17,9 @@
         </para>
         <para>
             Pro náš projekt jsme vybrali datové sady
-            <link xl:href="https://data.brno.cz/en/dataset/?id=kriminalita-v-brne">
-                Kriminalita v Brně
-            </link>
+            <link xl:href="https://data.brno.cz/en/dataset/?id=kriminalita-v-brne">Kriminalita v Brně</link>
             a
-            <link xl:href="https://data.brno.cz/en/dataset/?id=vyvoj-poctu-obyvatel-v-brne">
-                Vývoj počtu obyvatel v Brně
-            </link>.
+            <link xl:href="https://data.brno.cz/en/dataset/?id=vyvoj-poctu-obyvatel-v-brne">Vývoj počtu obyvatel v Brně</link>.
             Konkrétně jsme se zaměřili na rok 2016.
         </para>
     </section>
@@ -32,15 +28,15 @@
         <title>Práce na projektu</title>
 
         <para>
-            Mým prvním úkolem bylo vytvoření XML dokumentu se kterým by mohla naše aplikace pracovat.
+            Mým prvním úkolem bylo vytvoření XML dokumentu, se kterým by mohla naše aplikace pracovat.
             Zdrojové data byly v XLSX formátu (Microsoft Excel), proto prvním krokem pro jejich jednodušší zpracovaní,
             byl převod do formátu CSV. Pro parsování CSV dokumentu jsem použil knihovnu
             <link xl:href="http://opencsv.sourceforge.net/">Opencsv</link>. Z CSV jsem následně vytvořil XML dokument.
         </para>
         <para>
-            Dále jsme vytvořil jednu XML REST API metodu pro AJAXou aktualizaci informací na webu.
+            Dále jsem vytvořil jednu XML REST API metodu pro AJAXou aktualizaci informací na webu.
             Po vytvoření této metody jsem naimplementoval v JavaScriptu její asynchronní zavolání.
-            Součástí toho bylo provézt rozparsovaní příjmutého XML do JavaScriptového objetu pro následnou pohodlnější
+            Součástí toho bylo provézt rozparsovaní přijatého XML do JavaScriptového objetu pro následnou pohodlnější
             práci.
         </para>
 
@@ -48,7 +44,7 @@
             Jako poslední věc jsem provedl optimalizaci rychlosti aplikace. Původně byly všechny informace,
             které aplikace zobrazuje v jednom XML dokumentu o velikost 6,5 MB. V konečné fázi vývoje se nad tímto
             dokumentem provádělo přes 10 xPath dotazů, což trvalo přes půl sekundy. Jelikož většina dotazů probíhá na
-            datech pouze jedné vybrané městské části, misto jednoho velkého dokumentu, jsem vytvořil pro každou městskou
+            datech pouze jedné vybrané městské části, místo jednoho velkého dokumentu, jsem vytvořil pro každou městskou
             část vlastní menší dokument. Pro globální dotazy jsem ponechal i původní kompletní dokument.
         </para>
     </section>
